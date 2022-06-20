@@ -11,13 +11,13 @@ const Home: NextPage = () => {
     <div className={styles.home__container}>
       <section className={styles.home__intro}>
         <img src="img/bcg.png" alt="todo-list" />
-        <Button variant="contained">NEW TODO LIST</Button>
+        <p>Do you know that having TODO LIST can potentially sabotage your productivity?</p>
+        <Button variant="contained">CREATE NEW LIST</Button>
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>
         <Button variant="outlined" className={styles.home__listsBtn}>List 1</Button>
         <Button variant="outlined" className={styles.home__listsBtn}>List 2</Button>
-        <Button variant="outlined" className={styles.home__listsBtn}>List 3</Button>
       </section>
     </div>
   )
