@@ -1,6 +1,5 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
@@ -17,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </main>
 
       <footer className={styles.footer}>
-        <p>created by <a>Patrycja Panasiuk</a></p>
+        <p>created by <a href='https://patrycja.info' target="_blank">Patrycja Panasiuk</a></p>
       </footer>
     </div>
   )
