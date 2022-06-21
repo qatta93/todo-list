@@ -11,13 +11,15 @@ datasource db {
 }
 
 model Todo {
-  todoId String @id @default(cuid())
+  todoId     String @id @default(cuid())
+  listId     String
   todo       String
-  TodoList   TodoList? @relation(fields: [todoId], references: [todoListId])
+  isDone     Boolean  @default(false)
+  todoList   TodoList? @relation(fields: [listId], references: [todoListId])
 }
 
 model TodoList {
-  todoListId String @id @default(cuid())
-  todoListName String
-  todos Todo[]
+  todoListId    String @id @default(cuid())
+  todoListName  String
+  todos         Todo[]
 }
