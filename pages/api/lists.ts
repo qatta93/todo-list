@@ -1,13 +1,17 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { PrismaClient } from '@prisma/client'
 
-type Data = {
-  name: string
+const prisma = new PrismaClient();
+
+export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if(req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' })
+  }
+  const listData = JSON.parse(req.body);
+  const newList = await prisma.todoList.create({
+    data: listData
+  })
+  res.json({ message: 'hello world' })
 }
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export default handler;
