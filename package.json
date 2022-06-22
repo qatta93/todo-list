@@ -15,6 +15,7 @@
     "@mui/material": "^5.8.4",
     "@mui/styled-engine-sc": "^5.8.0",
     "@prisma/client": "^3.15.2",
+    "cuid": "^2.1.8",
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",

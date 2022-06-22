@@ -11,7 +11,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const newList = await prisma.todoList.create({
     data: listData
   })
-  res.json({ message: 'hello world' })
+  res.json(newList)
 }
 
 export default handler;
