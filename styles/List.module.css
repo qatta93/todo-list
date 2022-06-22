@@ -1,0 +1,76 @@
+.list {
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../public/img/background.jpg);
+  background-size: cover;
+}
+
+.list__nav {
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+  background-color: white;
+  padding: 0.5rem;
+  line-height: 1rem;
+  border: 1px solid gray;
+  font-weight: 600;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.list__arrow {
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.list h1 {
+  text-transform: uppercase;
+  color: rgb(131, 186, 90);
+  background-color: white;
+}
+
+.list__items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  padding: 2rem 0;
+  background-color: white;
+}
+
+.list__btn {
+  position: relative;
+  width: 15rem;
+  margin: 0.5rem;
+  border: none;
+  border-bottom: 1px solid rgb(68, 68, 68);
+  font-weight: 600;
+}
+
+.list__trash {
+  position: absolute;
+  right: 1rem;
+  height: 1.2rem;
+}
+
+.list__btnDone {
+  position: relative;
+  width: 15rem;
+  margin: 0.5rem;
+  border: none;
+  text-decoration: line-through;
+  border-bottom: 1px solid rgb(68, 68, 68);
+  color: rgb(181, 181, 181);
+}
+
+.list__checkbox {
+  position: absolute;
+  left: 1rem;
+  height: 1rem;
+}

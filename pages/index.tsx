@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 import Button from '@mui/material/Button';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
 
@@ -15,12 +15,12 @@ interface TodoListProps {
 
 export const getServerSideProps = async () => {
   const todoList = await prisma.todoList.findMany();
-  // console.log(todoList)
-  const todo = await prisma.todo.findMany();
-  // console.log(todo)
+  const todos = await prisma.todo.findMany();
+  console.log(todos)
   return {
     props: {
-      initialList: todoList
+      initialTodos: todos,
+      initialList: todoList,
     }
   };
 }
@@ -36,11 +36,13 @@ const newList = async(list:any) => {
   return await response.json();
 }
 
-const Home: NextPage =  ({ initialList }:any ) => {
+const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const [list, setList] = useState(initialList);
-  console.log(list);
+  const [todos, setTodos] = useState(initialTodos);
   const [currentPage, setCurrentPage] = useState<number>();
   const [newList, setNewList] = useState<boolean>(false);
+
+  console.log('im todos', todos)
 
   const router = useRouter();
   const { params } = router.query;
@@ -49,9 +51,9 @@ const Home: NextPage =  ({ initialList }:any ) => {
     <div className={styles.home__container}>
       <section className={styles.home__intro}>
         <img src="img/bcg.png" alt="todo-list" />
-        <p>Do you know that having TODO LIST can potentially sabotage your productivity?</p>
-        <Button variant="contained" onClick={() => setNewList(!newList)}>CREATE NEW LIST</Button>
-        {newList && <ListForm setList={setList} list={list} />}
+        <h1>Do you know that having <b>TODO LIST</b> can potentially sabotage your productivity?</h1>
+        <Button variant="contained" className= {newList === false ? styles.home__introBtn : styles.home__introBtnClose} onClick={() => setNewList(!newList)}>{newList === false ? 'NEW LIST' : 'CLOSE FORM'}</Button>
+        {newList && <ListForm setList={setList} list={list} todos={todos} setTodos={setTodos}/>}
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>

@@ -2,66 +2,56 @@ import React, { useState } from 'react'
 import { FormHelperText, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import cuid from 'cuid';
+import { prisma } from '@prisma/client';
+import styles from '../styles/Form.module.css'
 
-const newList = async(list:any) => {
-  const response = await fetch('/api/lists', {
-    method: 'POST',
-    body: JSON.stringify(list)
-  });
-  if(!response.ok){
-    throw new Error(response.statusText);
-  }
-  return await response.json();
-}
-
-export const ListForm = ({ setList, list }:any ) => {
-  const [todoName, setTodoName] = useState('');
-  const [todos, setTodos] = useState('');
-
-  const todosArray = todos.replace(/ /g, '').split(',');
+// const newList = async(list:any) => {
+//   const response = await fetch('/api/lists', {
+//     method: 'POST',
+//     body: JSON.stringify(list)
+//   });
+//   if(!response.ok){
+//     throw new Error(response.statusText);
+//   }
+//   return await response.json();
+// }
 
 
+export const ListForm = ({ setList, list, todos, setTodos }:any ) => {
+  const [newTodoName, setNewTodoName] = useState('');
+  const [newTodos, setNewTodos] = useState('');
 
 
 
-  // const allTodos = todosArray.map((todo:any) => {
-  //   const newTodo = {
-  //     todoId: cuid(),
-  //     listId: newTodoList.todoListId,
-  //     todo: todo,
-  //   }
-  // })
+  const todosArray = newTodos.replace(/ /g, '').split(',');
 
-  // console.log('im todos', allTodos)
-
-
-  // const handleSubmit = (data:any, e:any) => {
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     const newTodoList = {
       todoListId: cuid(),
-      todoListName: todoName,
+      todoListName: newTodoName,
     }
-
     setList([...list, newTodoList])
-    // try {
-    //   await saveContact(data);
-    //   setContacts([...contacts, data]);
-    //   e.target.reset();
-    // } catch (err) {
-    //   console.log(err);
-    // }
+
+    const allTodos = todosArray.map((todo:any) => {
+      return {
+        todoId: cuid(),
+        listId: newTodoList.todoListId,
+        todo: todo,
+        isDone: false,
+      }
+    })
+    setTodos([...todos, ...allTodos])
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* <InputLabel htmlFor="todo-name">Todo List Name</InputLabel> */}
-      <TextField id="todo-name" aria-describedby="my-helper-text1" value={todoName} onChange={e => setTodoName(e.target.value)}/>
-      <FormHelperText id="my-helper-text1">Please provide your todo list name.</FormHelperText>
-      <TextField id="todos" aria-describedby="my-helper-text2" value={todos} onChange={e => setTodos(e.target.value)}/>
-      <FormHelperText id="my-helper-text2">{`Please provide all your todos after coma (shopping, cleaning etc.)`}</FormHelperText>
-      <Button variant="contained" type="submit">SUBMIT</Button>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <TextField InputLabelProps={{style: { color: 'rgba(128, 128, 128, 0.7)', fontStyle: 'italic'}}} className={styles.form__input} label='Shopping list etc.' id="todo-name" aria-describedby="my-helper-text1" value={newTodoName} onChange={e => setNewTodoName(e.target.value)}/>
+      <FormHelperText  className={styles.form__text} id="my-helper-text1">Please provide your todo list name.</FormHelperText>
+      <TextField InputLabelProps={{style: { color: 'rgba(128, 128, 128, 0.7)', fontStyle: 'italic'}}} className={styles.form__input} label='bananas, oranges, milk etc.' id="todos" aria-describedby="my-helper-text2" value={newTodos} onChange={e => setNewTodos(e.target.value)}/>
+      <FormHelperText className={styles.form__text} id="my-helper-text2">{`Please provide all your todos after coma.`}</FormHelperText>
+      <Button variant="contained" type="submit" className={styles.form__btn}>SUBMIT</Button>
     </form>
   )
 }
