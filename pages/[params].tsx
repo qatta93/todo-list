@@ -18,7 +18,6 @@ interface FormData {
 export const getServerSideProps = async () => {
   const todos = await prisma.todo.findMany();
   const todoList = await prisma.todoList.findMany();
-  console.log(todoList)
   return {
     props: {
       initialTodos: todos,

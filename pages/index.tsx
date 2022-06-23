@@ -16,7 +16,6 @@ interface TodoListProps {
 export const getServerSideProps = async () => {
   const todoList = await prisma.todoList.findMany();
   const todos = await prisma.todo.findMany();
-  console.log(todoList)
   return {
     props: {
       initialTodos: todos,
