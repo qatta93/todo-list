@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 import Button from '@mui/material/Button';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
 
@@ -16,7 +16,7 @@ interface TodoListProps {
 export const getServerSideProps = async () => {
   const todoList = await prisma.todoList.findMany();
   const todos = await prisma.todo.findMany();
-  console.log(todos)
+  console.log(todoList)
   return {
     props: {
       initialTodos: todos,

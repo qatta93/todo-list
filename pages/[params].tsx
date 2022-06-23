@@ -72,35 +72,37 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
   }
 
   return (
-    <section className={styles.list}>
+    <div className={styles.list__container}>
       <a href="/" className={styles.list__nav}><ArrowLeftIcon className={styles.list__arrow}/>HOME</a>
-      <h1>{params} todo list :</h1>
-      <article className={styles.list__items}>
-        <section className={styles.list__addItem}>
-        <form onSubmit={e => {
-          e.preventDefault()
-          handleSubmit(form)
-          }} className=''>
-          <input type="text"
-            placeholder="Todo"
-            value={form.todo}
-            onChange={e => setForm({...form, todo: e.target.value})}
-            className=""
-          />
-          <button type="submit" className="">Add</button>
-        </form>
-        </section>
-        <section className={styles.list__filter}>
-          <p>FILTER TODOS:</p>
-          <button className={styles.list__filterBtnPending} onClick={() => setFilter('pending')}>PENDING</button>
-          <button className={styles.list__filterBtnDone} onClick={() => setFilter('done')}>DONE</button>
-          <button className={styles.list__filterBtnAll} onClick={() => setFilter('all')}>ALL</button>
-        </section>
-        {filter === 'all' && displayAllTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
-        {filter === 'pending' && displayPendingTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
-        {filter === 'done' && displayDoneTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
-      </article>
-    </section>
+      <section className={styles.list}>
+        <h1>{params} todo list :</h1>
+        <article className={styles.list__items}>
+          <section className={styles.list__addItem}>
+          <form onSubmit={e => {
+            e.preventDefault()
+            handleSubmit(form)
+            }} className=''>
+            <input type="text"
+              placeholder="Todo"
+              value={form.todo}
+              onChange={e => setForm({...form, todo: e.target.value})}
+              className=""
+            />
+            <button type="submit" className="">Add</button>
+          </form>
+          </section>
+          <section className={styles.list__filter}>
+            <p>FILTER TODOS:</p>
+            <button className={styles.list__filterBtnPending} onClick={() => setFilter('pending')}>PENDING</button>
+            <button className={styles.list__filterBtnDone} onClick={() => setFilter('done')}>DONE</button>
+            <button className={styles.list__filterBtnAll} onClick={() => setFilter('all')}>ALL</button>
+          </section>
+          {filter === 'all' && displayAllTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
+          {filter === 'pending' && displayPendingTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
+          {filter === 'done' && displayDoneTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
+        </article>
+      </section>
+    </div>
   )
 }
 

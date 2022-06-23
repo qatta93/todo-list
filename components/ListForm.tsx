@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { FormHelperText, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import cuid from 'cuid';
-import { prisma } from '@prisma/client';
 import styles from '../styles/Form.module.css'
 import { useRouter } from 'next/router'
 
@@ -19,26 +18,6 @@ export const ListForm = ({ setList, list, todos, setTodos }:any ) => {
   const router = useRouter()
 
   const todosArray = newTodos.replace(/ /g, '').split(',');
-
-  // const handleSubmit = async (e:any) => {
-  //   e.preventDefault();
-
-  //   const newTodoList = {
-  //     todoListId: cuid(),
-  //     todoListName: newTodoName,
-  //   }
-  //   setList([...list, newTodoList])
-
-  //   const allTodos = todosArray.map((todo:any) => {
-  //     return {
-  //       todoId: cuid(),
-  //       listId: newTodoList.todoListId,
-  //       todo: todo,
-  //       isDone: false,
-  //     }
-  //   })
-  //   setTodos([...todos, ...allTodos])
-  // };
 
   const [form, setForm] = useState<TodoListProps>({todoListId: cuid(), todoListName: ''})
 
