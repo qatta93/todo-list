@@ -1,0 +1,54 @@
+.list__btn {
+  position: relative;
+  width: 15rem;
+  margin: 0.5rem;
+  border: none;
+  border-bottom: 1px solid rgb(68, 68, 68);
+  font-weight: 600;
+}
+
+.list__trash {
+  position: absolute;
+  right: 1rem;
+  height: 1.2rem;
+}
+
+.list__btnDone {
+  order: 1;
+  position: relative;
+  width: 15rem;
+  margin: 0.5rem;
+  border: none;
+  text-decoration: line-through;
+  border-bottom: 1px solid rgb(68, 68, 68);
+  color: rgb(181, 181, 181);
+}
+
+.list__checkbox {
+  position: absolute;
+  left: 1rem;
+  height: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+
+  .list__btn {
+    width: 25rem;
+    margin: 0.7rem;
+    font-size: 1.2rem;
+  }
+  
+  .list__trash {
+    height: 1.7rem;
+  }
+  
+  .list__btnDone {
+    width: 25rem;
+    margin: 0.7rem;
+    font-size: 1.2rem;
+  }
+  
+  .list__checkbox {
+    height: 1.5rem;
+  }
+}

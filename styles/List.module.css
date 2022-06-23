@@ -44,36 +44,50 @@
   background-color: white;
 }
 
-.list__btn {
-  position: relative;
-  width: 15rem;
-  margin: 0.5rem;
-  border: none;
-  border-bottom: 1px solid rgb(68, 68, 68);
-  font-weight: 600;
+.list__filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
 }
 
-.list__trash {
-  position: absolute;
-  right: 1rem;
-  height: 1.2rem;
+.list__filterBtnPending {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  padding: 0.3rem;
+  font-size: 0.7rem;
+  border: 0.5px solid #1976d2;
+  color: #1976d2;
 }
 
-.list__btnDone {
-  position: relative;
-  width: 15rem;
-  margin: 0.5rem;
-  border: none;
-  text-decoration: line-through;
-  border-bottom: 1px solid rgb(68, 68, 68);
-  color: rgb(181, 181, 181);
+.list__filterBtnDone {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  padding: 0.3rem;
+  font-size: 0.7rem;
+  border: 0.5px solid #d21935;
+  color: #d21935;
 }
 
-.list__checkbox {
-  position: absolute;
-  left: 1rem;
-  height: 1rem;
+.list__filterBtnAll {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  padding: 0.3rem;
+  font-size: 0.7rem;
+  border: 0.5px solid #5d5d5d;
+  color: #5d5d5d;
 }
+
+
 
 @media screen and (min-width: 768px) {
   .list__nav {
@@ -94,24 +108,5 @@
   
   .list__items {
     padding: 4rem 0;
-  }
-  
-  .list__btn {
-    width: 25rem;
-    margin: 0.7rem;
-    font-size: 1.2rem;
-  }
-  
-  .list__trash {
-    height: 1.7rem;
-  }
-  
-  .list__btnDone {
-    width: 25rem;
-    margin: 0.7rem;
-  }
-  
-  .list__checkbox {
-    height: 1.5rem;
   }
 }
