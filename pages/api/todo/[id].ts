@@ -4,16 +4,16 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-	const {todo} = req.query
+	const {todoId} = req.body
 	console.log('elo')
 
 	if(req.method === 'DELETE') {
 		const todoToDelete = await prisma.todo.delete({
 			where: {
-
+				todoId,
 			}
 		})
-		res.json(todo)
+		res.json(todoToDelete)
 	} else {
 		console.log("Todo couldn't be deleted");
 	}

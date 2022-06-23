@@ -31,7 +31,8 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
   const {params} = router.query
 
   const findList = initialTodoList.filter((name:any) => name.todoListName.toLowerCase() === params);
-  const findListId = findList[0].todoListId;
+  const findListId = findList[0]?.todoListId;
+
 
   const displayAllTodos = initialTodos.filter((listId:any) => listId.listId === findListId);
   const displayPendingTodos = initialTodos.filter((listId:any) => listId.listId === findListId && listId.isDone === false);
@@ -74,8 +75,8 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
     <div className={styles.list__container}>
       <a href="/" className={styles.list__nav}><ArrowLeftIcon className={styles.list__arrow}/>HOME</a>
       <section className={styles.list}>
-        <h1>{params} todo list :</h1>
         <article className={styles.list__items}>
+        <h1>{params} todo list :</h1>
           <section className={styles.list__addItem}>
           <form onSubmit={e => {
             e.preventDefault()

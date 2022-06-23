@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Todo {
-  todoId     String @id @default(cuid())
+  todoId     String @default(cuid())
   listId     String
   todo       String
   isDone     Boolean  @default(false)

@@ -20,11 +20,9 @@ export const TodoCard = ({ todo }:any) => {
     router.replace(router.asPath)
   }
 
-  const handleDelete = async (id: string) => {
-    
+  const handleDelete = async (id: any) => {
       try {
-        console.log(id)
-       fetch(`http://localhost:3000/api/todo/${id}`, {
+       fetch(`http://localhost:3000/api/todos`, {
          headers: {
            "Content-Type": "application/json",
          },
