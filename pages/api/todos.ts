@@ -6,8 +6,8 @@ const prisma = new PrismaClient();
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if(req.method === 'POST') {
 
-  const {todoId, listId, todo, isDone} = req.body
-  console.log(todoId)
+  const {todoId, listId, todo, isDone} = req.body;
+  
   try {
     const newTodo = await prisma.todo.create({
       data: {
@@ -22,20 +22,6 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		console.log("Failure");
 	}
   }
-
-
-  if(req.method === 'DELETE') {
-    const {todoId, listId, todo, isDone} = req.body
-    console.log(todoId)
-		const todoToDelete = await prisma.todo.delete({
-			where: {
-				todoId: todoId,
-			}
-		})
-		res.json(todoToDelete)
-	} else {
-		console.log("Todo couldn't be deleted");
-	}
 }
 
 export default handler;

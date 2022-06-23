@@ -4,13 +4,6 @@ import { TrashIcon } from '@heroicons/react/outline'
 import styles from '../styles/TodoCard.module.css'
 import { useRouter } from 'next/router'
 
-interface TodoProps {
-  todoId: string,
-  listId: string,
-  todo: string,
-  isDone: boolean
-}
-
 export const TodoCard = ({ todo }:any) => {
   const [isDone, setIsDone] = useState<boolean>(todo.isDone);
 
@@ -20,9 +13,9 @@ export const TodoCard = ({ todo }:any) => {
     router.replace(router.asPath)
   }
 
-  const handleDelete = async (id: any) => {
+  const handleDelete = async (id: string) => {
       try {
-       fetch(`http://localhost:3000/api/todos`, {
+       fetch(`http://localhost:3000/api/todo/${id}`, {
          headers: {
            "Content-Type": "application/json",
          },

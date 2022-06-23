@@ -4,13 +4,13 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-	const {todoId} = req.body
-	console.log('elo')
+	const id = req.query.id;
 
 	if(req.method === 'DELETE') {
 		const todoToDelete = await prisma.todo.delete({
 			where: {
-				todoId,
+				//@ts-ignore
+				todoId: id,
 			}
 		})
 		res.json(todoToDelete)

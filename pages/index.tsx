@@ -27,7 +27,6 @@ export const getServerSideProps = async () => {
 const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const [list, setList] = useState(initialList);
   const [todos, setTodos] = useState(initialTodos);
-  const [currentPage, setCurrentPage] = useState<string>();
   const [newList, setNewList] = useState<boolean>(false);
 
   const router = useRouter();
@@ -43,7 +42,7 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>
-        {list.map((todo:TodoListProps) => <a href={`/${todo.todoListName.toLowerCase()}`} onClick={() => setCurrentPage(todo.todoListId)}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a>)}
+        {list.map((todo:TodoListProps) => <a href={`/${todo.todoListName.toLowerCase()}`}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a>)}
       </section>
     </div>
   )

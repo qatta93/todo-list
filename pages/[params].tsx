@@ -8,7 +8,7 @@ import cuid from 'cuid';
 
 const prisma = new PrismaClient();
 
-interface FormData {
+interface TodoProps {
   todoId: string,
   listId: string,
   todo: string,
@@ -40,13 +40,13 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
 
   const [filter, setFilter] = useState<string>('all')
 
-  const [form, setForm] = useState<FormData>({todoId: cuid(), listId: findListId, todo: '', isDone: false})
+  const [form, setForm] = useState<TodoProps>({todoId: cuid(), listId: findListId, todo: '', isDone: false})
 
   const refreshData = () => {
     router.replace(router.asPath)
   }
 
-  async function create(data: FormData) {
+  async function create(data: TodoProps) {
     try {
       fetch('http://localhost:3000/api/todos', {
         body: JSON.stringify(data),
@@ -63,7 +63,7 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
       }
   }
 
-  const handleSubmit = async (data: FormData) => {
+  const handleSubmit = async (data: TodoProps) => {
     try {
      create(data) 
     } catch (error) {
@@ -97,9 +97,9 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
             <button className={styles.list__filterBtnDone} onClick={() => setFilter('done')}>DONE</button>
             <button className={styles.list__filterBtnAll} onClick={() => setFilter('all')}>ALL</button>
           </section>
-          {filter === 'all' && displayAllTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
-          {filter === 'pending' && displayPendingTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
-          {filter === 'done' && displayDoneTodos.map((todo: any) => <TodoCard key={todo.todoId} todo={todo}/>)}
+          {filter === 'all' && displayAllTodos.map((todo: TodoProps) => <TodoCard key={todo.todoId} todo={todo}/>)}
+          {filter === 'pending' && displayPendingTodos.map((todo: TodoProps) => <TodoCard key={todo.todoId} todo={todo}/>)}
+          {filter === 'done' && displayDoneTodos.map((todo: TodoProps) => <TodoCard key={todo.todoId} todo={todo}/>)}
         </article>
       </section>
     </div>
