@@ -18,7 +18,7 @@ interface FormData {
 export const getServerSideProps = async () => {
   const todos = await prisma.todo.findMany();
   const todoList = await prisma.todoList.findMany();
-  console.log(todos)
+  console.log(todoList)
   return {
     props: {
       initialTodos: todos,
@@ -55,20 +55,12 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
         },
         method: 'POST'
       }).then(() => {
-        if(data.todoId) {
-          console.log('post is working!')
           setForm({todoId: '', listId: '', todo: '', isDone: false})
           refreshData()
-        } else {
-          setForm({todoId: '', listId: '', todo: '', isDone: false})
-          refreshData()
-
-        }
+      })
+      } catch (error) {
+        console.log(error);
       }
-        )
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   const handleSubmit = async (data: FormData) => {
@@ -88,14 +80,14 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
         <form onSubmit={e => {
           e.preventDefault()
           handleSubmit(form)
-          }} className='w-auto min-w-[25%] max-w-min mx-auto space-y-6 flex flex-col items-stretch'>
+          }} className=''>
           <input type="text"
             placeholder="Todo"
             value={form.todo}
             onChange={e => setForm({...form, todo: e.target.value})}
-            className="border-2 rounded border-gray-600 p-1"
+            className=""
           />
-          <button type="submit" className="bg-blue-500 text-white rounded p-1">Add</button>
+          <button type="submit" className="">Add</button>
         </form>
         </section>
         <section className={styles.list__filter}>

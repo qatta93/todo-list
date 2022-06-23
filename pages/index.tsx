@@ -9,7 +9,7 @@ import { ListForm } from '../components/ListForm'
 const prisma = new PrismaClient();
 
 interface TodoListProps {
-  todoListId: number,
+  todoListId: string,
   todoListName: string,
 }
 
@@ -25,24 +25,11 @@ export const getServerSideProps = async () => {
   };
 }
 
-const newList = async(list:any) => {
-  const response = await fetch('/api/lists', {
-    method: 'POST',
-    body: JSON.stringify(list)
-  });
-  if(!response.ok){
-    throw new Error(response.statusText);
-  }
-  return await response.json();
-}
-
 const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const [list, setList] = useState(initialList);
   const [todos, setTodos] = useState(initialTodos);
-  const [currentPage, setCurrentPage] = useState<number>();
+  const [currentPage, setCurrentPage] = useState<string>();
   const [newList, setNewList] = useState<boolean>(false);
-
-  console.log('im todos', todos)
 
   const router = useRouter();
   const { params } = router.query;
