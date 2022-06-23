@@ -1,8 +1,11 @@
 .form {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 2rem 4rem;
+  width: 100%;
 }
 
 .form__input {
@@ -17,10 +20,14 @@
 }
 
 .form__btn {
-  margin-top: 1rem;
+  margin: 1rem 0;
   background-color: rgb(131, 186, 90);
   font-size: 1rem;
   padding: 0.5rem 1rem;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 @media screen and (min-width: 768px) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormHelperText, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import cuid from 'cuid';
@@ -12,13 +12,9 @@ interface TodoListProps {
 }
 
 export const ListForm = ({ setList, list, todos, setTodos }:any ) => {
-  const [newTodoName, setNewTodoName] = useState('');
-  const [newTodos, setNewTodos] = useState('');
 
   const router = useRouter()
-
-  const todosArray = newTodos.replace(/ /g, '').split(',');
-
+  
   const [form, setForm] = useState<TodoListProps>({todoListId: cuid(), todoListName: ''})
 
   const refreshData = () => {
@@ -55,11 +51,10 @@ export const ListForm = ({ setList, list, todos, setTodos }:any ) => {
     <form onSubmit={e => 
       {e.preventDefault()
       handleSubmit(form)
-      }}>
+      }}
+      >
       <TextField value={form.todoListName} InputLabelProps={{style: { color: 'rgba(128, 128, 128, 0.7)', fontStyle: 'italic'}}} className={styles.form__input} label='Shopping list etc.' id="todo-name" aria-describedby="my-helper-text1"  onChange={e => setForm({...form, todoListName: e.target.value})}/>
       <FormHelperText className={styles.form__text} id="my-helper-text1">Please provide your todo list name.</FormHelperText>
-      <TextField InputLabelProps={{style: { color: 'rgba(128, 128, 128, 0.7)', fontStyle: 'italic'}}} className={styles.form__input} label='bananas, oranges, milk etc.' id="todos" aria-describedby="my-helper-text2" value={newTodos} onChange={e => setNewTodos(e.target.value)}/>
-      <FormHelperText className={styles.form__text} id="my-helper-text2">{`Please provide all your todos after coma.`}</FormHelperText>
       <Button variant="contained" type="submit" className={styles.form__btn}>SUBMIT</Button>
     </form>
   )

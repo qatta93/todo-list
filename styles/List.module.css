@@ -8,12 +8,11 @@
 .list {
   position: relative;
   width: 100vw;
-  height: 90vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-y: scroll;
   padding: 2rem 0;
 }
 
@@ -38,6 +37,7 @@
   text-transform: uppercase;
   color: rgb(131, 186, 90);
   background-color: white;
+  margin-top: 2rem;
 }
 
 .list__items {
