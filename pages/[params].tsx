@@ -4,12 +4,21 @@ import styles from '../styles/List.module.css'
 import { PrismaClient } from '@prisma/client';
 import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { TodoCard } from '../components/TodoCard'
+import cuid from 'cuid';
 
 const prisma = new PrismaClient();
+
+interface FormData {
+  todoId: string,
+  listId: string,
+  todo: string,
+  isDone: boolean
+}
 
 export const getServerSideProps = async () => {
   const todos = await prisma.todo.findMany();
   const todoList = await prisma.todoList.findMany();
+  console.log(todos)
   return {
     props: {
       initialTodos: todos,
@@ -31,11 +40,64 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
 
   const [filter, setFilter] = useState<string>('all')
 
+  const [form, setForm] = useState<FormData>({todoId: cuid(), listId: findListId, todo: '', isDone: false})
+
+  const refreshData = () => {
+    router.replace(router.asPath)
+  }
+
+  async function create(data: FormData) {
+    try {
+      fetch('http://localhost:3000/api/todos', {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      }).then(() => {
+        if(data.todoId) {
+          console.log('post is working!')
+          setForm({todoId: '', listId: '', todo: '', isDone: false})
+          refreshData()
+        } else {
+          setForm({todoId: '', listId: '', todo: '', isDone: false})
+          refreshData()
+
+        }
+      }
+        )
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleSubmit = async (data: FormData) => {
+    try {
+     create(data) 
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <section className={styles.list}>
       <a href="/" className={styles.list__nav}><ArrowLeftIcon className={styles.list__arrow}/>HOME</a>
       <h1>{params} todo list :</h1>
       <article className={styles.list__items}>
+        <section className={styles.list__addItem}>
+        <form onSubmit={e => {
+          e.preventDefault()
+          handleSubmit(form)
+          }} className='w-auto min-w-[25%] max-w-min mx-auto space-y-6 flex flex-col items-stretch'>
+          <input type="text"
+            placeholder="Todo"
+            value={form.todo}
+            onChange={e => setForm({...form, todo: e.target.value})}
+            className="border-2 rounded border-gray-600 p-1"
+          />
+          <button type="submit" className="bg-blue-500 text-white rounded p-1">Add</button>
+        </form>
+        </section>
         <section className={styles.list__filter}>
           <p>FILTER TODOS:</p>
           <button className={styles.list__filterBtnPending} onClick={() => setFilter('pending')}>PENDING</button>
