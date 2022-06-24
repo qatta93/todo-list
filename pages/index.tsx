@@ -2,15 +2,13 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 import Button from '@mui/material/Button';
-import { PrismaClient } from '@prisma/client';
+import prisma from '../lib/prisma'
 import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
 import { TrashIcon } from '@heroicons/react/outline'
 import { TodoListProps, TodoProps } from '../types/types';
 import Link from 'next/link'
 import Image from 'next/image'
-
-const prisma = new PrismaClient();
 
 export const getServerSideProps = async () => {
   const todoList = await prisma.todoList.findMany();

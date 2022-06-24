@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../styles/List.module.css'
-import { PrismaClient } from '@prisma/client';
+import prisma from '../lib/prisma'
 import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { TodoCard } from '../components/TodoCard'
 import cuid from 'cuid';
 import { TodoProps } from '../types/types';
 import Link from 'next/link'
-
-const prisma = new PrismaClient();
 
 export const getServerSideProps = async () => {
   const todos = await prisma.todo.findMany();
