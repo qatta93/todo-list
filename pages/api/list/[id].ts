@@ -5,23 +5,16 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 	const id = req.query.id;
-	console.log(id)
-	const {status} = req.query
-  console.log(status)
 
-	if(req.method === 'UPDATE') {
-		const todoUpdate = await prisma.todo.update({
+	if(req.method === 'DELETE') {
+		const todoListToDelete = await prisma.todoList.delete({
 			where: {
 				//@ts-ignore
-				todoId: id,
-			},
-			data: {
-				//@ts-ignore
-				isDone: status,
+				todoListId: id,
 			}
 		})
-		res.json(todoUpdate)
+		res.json(todoListToDelete)
 	} else {
-		console.log("Todo couldn't be updated");
+		console.log("Todo List couldn't be deleted");
 	}
 }

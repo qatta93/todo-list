@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { PrismaClient } from '@prisma/client';
 import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
+import { TrashIcon } from '@heroicons/react/outline'
 
 const prisma = new PrismaClient();
 
@@ -32,6 +33,25 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const router = useRouter();
   const { params } = router.query;
 
+  const refreshData = () => {
+    router.replace(router.asPath)
+  }
+
+  // const handleDelete = async (id: string) => {
+  //   try {
+  //    fetch(`http://localhost:3000/api/list/${id}`, {
+  //      headers: {
+  //        "Content-Type": "application/json",
+  //      },
+  //      method: 'DELETE'
+  //    }).then(() => {
+  //      refreshData()
+  //    })
+  //   } catch (error) {
+  //    console.log(error); 
+  //   }
+  // }
+
   return (
     <div className={styles.home__container}>
       <section className={styles.home__intro}>
@@ -42,7 +62,9 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>
+        {/* {list.map((todo:TodoListProps) => <li><a href={`/${todo.todoListName.toLowerCase()}`} key={todo.todoListId}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a><TrashIcon className={styles.list__trash} onClick={() => handleDelete(todo.todoListId)}/></li>)} */}
         {list.map((todo:TodoListProps) => <a href={`/${todo.todoListName.toLowerCase()}`} key={todo.todoListId}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a>)}
+
       </section>
     </div>
   )
