@@ -4,21 +4,24 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if(req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' })
-  }
-  const {todoListId, todoListName} = req.body
+  if(req.method === 'POST') {
+
+  const {todoId, listId, todo, isDone} = req.body;
+  
   try {
-    const newTodoList = await prisma.todoList.create({
+    const newTodo = await prisma.todo.create({
       data: {
-        todoListId,
-        todoListName,
+        todoId,
+        listId,
+        todo,
+        isDone
       }
     })
-    res.status(200).json(newTodoList)
+    res.status(200).json(newTodo)
 	} catch (error) {
 		console.log("Failure");
 	}
+  }
 }
 
 export default handler;
