@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
 import { TrashIcon } from '@heroicons/react/outline'
 import { TodoListProps, TodoProps } from '../types/types';
+import Link from 'next/link'
 
 const prisma = new PrismaClient();
 
@@ -65,7 +66,7 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>
-        {list.map((todo:TodoListProps) => <li key={todo.todoListId}><a href={`/${todo.todoListName.toLowerCase()}`}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a><TrashIcon className={styles.home__listTrash} onClick={() => handleDelete(todo.todoListId)}/></li>)}
+        {list.map((todo:TodoListProps) => <li key={todo.todoListId}><Link href={`/${todo.todoListName.toLowerCase()}`}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></Link><TrashIcon className={styles.home__listTrash} onClick={() => handleDelete(todo.todoListId)}/></li>)}
       </section>
     </div>
   )

@@ -20,7 +20,7 @@ export const getServerSideProps = async () => {
   };
 }
 
-export const list = ({ initialTodos, initialTodoList }:any ) => {
+export const List = ({ initialTodos, initialTodoList }:any ) => {
   const router = useRouter()
   const {params} = router.query
 
@@ -94,4 +94,4 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
   )
 }
 
-export default list;
+export default List;
