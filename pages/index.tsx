@@ -6,20 +6,9 @@ import { PrismaClient } from '@prisma/client';
 import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
 import { TrashIcon } from '@heroicons/react/outline'
+import { TodoListProps, TodoProps } from '../types/types';
 
 const prisma = new PrismaClient();
-
-interface TodoListProps {
-  todoListId: string,
-  todoListName: string,
-}
-
-interface TodoProps {
-  todoId: string,
-  listId: string,
-  todo: string,
-  isDone: boolean
-}
 
 export const getServerSideProps = async () => {
   const todoList = await prisma.todoList.findMany();
@@ -35,26 +24,18 @@ export const getServerSideProps = async () => {
 const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const [list, setList] = useState(initialList);
   const [newList, setNewList] = useState<boolean>(false);
-  
-  const refreshData = () => {
-    router.replace(router.asPath)
-  }
-
   const router = useRouter();
-  const { params } = router.query;
-
 
   const handleDelete = async (id: string) => {
     if(initialTodos.some((todo:TodoProps) => todo.listId === id)){
       try {
-        fetch(`http://localhost:3000/api/todo/delete/${id}`, {
+        fetch(`http://localhost:3000/api/todo/deleteMany/${id}`, {
           headers: {
             "Content-Type": "application/json",
           },
           method: 'DELETE'
         }).then(() => {
-         setTimeout(function(){window.location.reload();},0.001);
-          refreshData()
+         setTimeout(function(){window.location.reload();},0.00001);
           })
        } catch (error) {
         console.log(error); 
@@ -67,8 +48,7 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
        },
        method: 'DELETE'
      }).then(() => {
-      setTimeout(function(){window.location.reload();},0.001);
-       refreshData()
+      setTimeout(function(){window.location.reload();},0.00001);
      })
     } catch (error) {
      console.log(error); 

@@ -5,15 +5,9 @@ import { PrismaClient } from '@prisma/client';
 import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { TodoCard } from '../components/TodoCard'
 import cuid from 'cuid';
+import { TodoProps } from '../types/types';
 
 const prisma = new PrismaClient();
-
-interface TodoProps {
-  todoId: string,
-  listId: string,
-  todo: string,
-  isDone: boolean
-}
 
 export const getServerSideProps = async () => {
   const todos = await prisma.todo.findMany();
@@ -39,12 +33,7 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
   const displayDoneTodos = initialTodos.filter((listId:any) => listId.listId === findListId && listId.isDone === true);
 
   const [filter, setFilter] = useState<string>('all')
-
   const [form, setForm] = useState<TodoProps>({todoId: cuid(), listId: findListId, todo: '', isDone: false})
-
-  const refreshData = () => {
-    router.replace(router.asPath)
-  }
 
   async function create(data: TodoProps) {
     try {
@@ -56,7 +45,7 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
         method: 'POST'
       }).then(() => {
           setForm({todoId: '', listId: '', todo: '', isDone: false})
-          refreshData()
+          setTimeout(function(){window.location.reload();},0.0001);
       })
       } catch (error) {
         console.log(error);
@@ -86,9 +75,8 @@ export const list = ({ initialTodos, initialTodoList }:any ) => {
               placeholder="Todo"
               value={form.todo}
               onChange={e => setForm({...form, todo: e.target.value})}
-              className=""
             />
-            <button type="submit" className="">Add</button>
+            <button type="submit">Add</button>
           </form>
           </section>
           <section className={styles.list__filter}>

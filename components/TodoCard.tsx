@@ -33,6 +33,7 @@ export const TodoCard = ({ todo }:any) => {
        fetch(`http://localhost:3000/api/todo/${id}`, {
          headers: {
            "Content-Type": "application/json",
+           'Location': `http://localhost:3000/api/todo/${id}`,
          },
          method: 'UPDATE'
        }).then(() => {

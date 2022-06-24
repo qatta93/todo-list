@@ -4,22 +4,13 @@ import Button from '@mui/material/Button';
 import cuid from 'cuid';
 import styles from '../styles/Form.module.css'
 import { useRouter } from 'next/router'
-
-
-interface TodoListProps {
-  todoListId: string,
-  todoListName: string,
-}
+import { TodoListProps } from '../types/types';
 
 export const ListForm = () => {
 
   const router = useRouter()
   
   const [form, setForm] = useState<TodoListProps>({todoListId: cuid(), todoListName: ''})
-
-  const refreshData = () => {
-    router.replace(router.asPath)
-  }
 
   async function create(data: TodoListProps) {
     try {
@@ -30,10 +21,8 @@ export const ListForm = () => {
         },
         method: 'POST'
       }).then(() => {
-          console.log('post is working!')
           setForm({todoListId: '', todoListName: ''})
-          setTimeout(function(){window.location.reload();},0.1);
-          refreshData()
+          setTimeout(function(){window.location.reload();},0.0001);
       })
       } catch (error) {
         console.log(error);
