@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 import Button from '@mui/material/Button';
 import { PrismaClient } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
 import { TrashIcon } from '@heroicons/react/outline'
 
@@ -12,6 +12,13 @@ const prisma = new PrismaClient();
 interface TodoListProps {
   todoListId: string,
   todoListName: string,
+}
+
+interface TodoProps {
+  todoId: string,
+  listId: string,
+  todo: string,
+  isDone: boolean
 }
 
 export const getServerSideProps = async () => {
@@ -27,37 +34,46 @@ export const getServerSideProps = async () => {
 
 const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const [list, setList] = useState(initialList);
-  const [todos, setTodos] = useState(initialTodos);
   const [newList, setNewList] = useState<boolean>(false);
-  const [updateList, setUpdateList] = useState<boolean>(false);
   
-  console.log(updateList)
   const refreshData = () => {
     router.replace(router.asPath)
   }
-
-  useEffect(() => {
-    refreshData()
-  },[updateList])
 
   const router = useRouter();
   const { params } = router.query;
 
 
-  // const handleDelete = async (id: string) => {
-  //   try {
-  //    fetch(`http://localhost:3000/api/list/${id}`, {
-  //      headers: {
-  //        "Content-Type": "application/json",
-  //      },
-  //      method: 'DELETE'
-  //    }).then(() => {
-  //      refreshData()
-  //    })
-  //   } catch (error) {
-  //    console.log(error); 
-  //   }
-  // }
+  const handleDelete = async (id: string) => {
+    if(initialTodos.some((todo:TodoProps) => todo.listId === id)){
+      try {
+        fetch(`http://localhost:3000/api/todo/delete/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'DELETE'
+        }).then(() => {
+         setTimeout(function(){window.location.reload();},0.001);
+          refreshData()
+          })
+       } catch (error) {
+        console.log(error); 
+       }
+    }
+    try {
+     fetch(`http://localhost:3000/api/list/${id}`, {
+       headers: {
+         "Content-Type": "application/json",
+       },
+       method: 'DELETE'
+     }).then(() => {
+      setTimeout(function(){window.location.reload();},0.001);
+       refreshData()
+     })
+    } catch (error) {
+     console.log(error); 
+    }
+  }
 
   return (
     <div className={styles.home__container}>
@@ -69,9 +85,7 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>
-        {/* {list.map((todo:TodoListProps) => <li><a href={`/${todo.todoListName.toLowerCase()}`} key={todo.todoListId}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a><TrashIcon className={styles.list__trash} onClick={() => handleDelete(todo.todoListId)}/></li>)} */}
-        {list.map((todo:TodoListProps) => <a href={`/${todo.todoListName.toLowerCase()}`} key={todo.todoListId}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a>)}
-
+        {list.map((todo:TodoListProps) => <li key={todo.todoListId}><a href={`/${todo.todoListName.toLowerCase()}`}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a><TrashIcon className={styles.list__trash} onClick={() => handleDelete(todo.todoListId)}/></li>)}
       </section>
     </div>
   )
