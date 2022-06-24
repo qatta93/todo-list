@@ -2,17 +2,21 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 import Button from '@mui/material/Button';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { useState } from 'react';
 import { ListForm } from '../components/ListForm'
-import { TrashIcon } from '@heroicons/react/outline'
-import { TodoListProps, TodoProps } from '../types/types';
 
 const prisma = new PrismaClient();
+
+interface TodoListProps {
+  todoListId: number,
+  todoListName: string,
+}
 
 export const getServerSideProps = async () => {
   const todoList = await prisma.todoList.findMany();
   const todos = await prisma.todo.findMany();
+  console.log(todos)
   return {
     props: {
       initialTodos: todos,
@@ -21,39 +25,27 @@ export const getServerSideProps = async () => {
   };
 }
 
+const newList = async(list:any) => {
+  const response = await fetch('/api/lists', {
+    method: 'POST',
+    body: JSON.stringify(list)
+  });
+  if(!response.ok){
+    throw new Error(response.statusText);
+  }
+  return await response.json();
+}
+
 const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const [list, setList] = useState(initialList);
+  const [todos, setTodos] = useState(initialTodos);
+  const [currentPage, setCurrentPage] = useState<number>();
   const [newList, setNewList] = useState<boolean>(false);
-  const router = useRouter();
 
-  const handleDelete = async (id: string) => {
-    if(initialTodos.some((todo:TodoProps) => todo.listId === id)){
-      try {
-        fetch(`http://localhost:3000/api/todo/deleteMany/${id}`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: 'DELETE'
-        }).then(() => {
-         setTimeout(function(){window.location.reload();},0.00001);
-          })
-       } catch (error) {
-        console.log(error); 
-       }
-    }
-    try {
-     fetch(`http://localhost:3000/api/list/${id}`, {
-       headers: {
-         "Content-Type": "application/json",
-       },
-       method: 'DELETE'
-     }).then(() => {
-      setTimeout(function(){window.location.reload();},0.00001);
-     })
-    } catch (error) {
-     console.log(error); 
-    }
-  }
+  console.log('im todos', todos)
+
+  const router = useRouter();
+  const { params } = router.query;
 
   return (
     <div className={styles.home__container}>
@@ -61,11 +53,11 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
         <img src="img/bcg.png" alt="todo-list" />
         <h1>Do you know that having <b>TODO LIST</b> can potentially sabotage your productivity?</h1>
         <Button variant="contained" className= {newList === false ? styles.home__introBtn : styles.home__introBtnClose} onClick={() => setNewList(!newList)}>{newList === false ? 'NEW LIST' : 'CLOSE FORM'}</Button>
-        {newList && <ListForm />}
+        {newList && <ListForm setList={setList} list={list} todos={todos} setTodos={setTodos}/>}
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>
-        {list.map((todo:TodoListProps) => <li key={todo.todoListId}><a href={`/${todo.todoListName.toLowerCase()}`}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a><TrashIcon className={styles.home__listTrash} onClick={() => handleDelete(todo.todoListId)}/></li>)}
+        {list.map((todo:TodoListProps) => <a href={`/${todo.todoListName.toLowerCase()}`} onClick={() => setCurrentPage(todo.todoListId)}><Button variant="outlined" className={styles.home__listsBtn}>{todo.todoListName}</Button></a>)}
       </section>
     </div>
   )
