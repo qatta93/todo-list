@@ -92,6 +92,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  list-style: none;
+}
+
+.home__lists li {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.home__listTrash {
+  height: 3rem;
+  margin-left: 1rem;
 }
 
 .home__listsBtn {
