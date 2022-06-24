@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css'
 import Button from '@mui/material/Button';
 import { PrismaClient } from '@prisma/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ListForm } from '../components/ListForm'
 import { TrashIcon } from '@heroicons/react/outline'
 
@@ -29,13 +29,20 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   const [list, setList] = useState(initialList);
   const [todos, setTodos] = useState(initialTodos);
   const [newList, setNewList] = useState<boolean>(false);
+  const [updateList, setUpdateList] = useState<boolean>(false);
+  
+  console.log(updateList)
+  const refreshData = () => {
+    router.replace(router.asPath)
+  }
+
+  useEffect(() => {
+    refreshData()
+  },[updateList])
 
   const router = useRouter();
   const { params } = router.query;
 
-  const refreshData = () => {
-    router.replace(router.asPath)
-  }
 
   // const handleDelete = async (id: string) => {
   //   try {
@@ -58,7 +65,7 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
         <img src="img/bcg.png" alt="todo-list" />
         <h1>Do you know that having <b>TODO LIST</b> can potentially sabotage your productivity?</h1>
         <Button variant="contained" className= {newList === false ? styles.home__introBtn : styles.home__introBtnClose} onClick={() => setNewList(!newList)}>{newList === false ? 'NEW LIST' : 'CLOSE FORM'}</Button>
-        {newList && <ListForm setList={setList} list={list} todos={todos} setTodos={setTodos}/>}
+        {newList && <ListForm />}
       </section>
       <section className={styles.home__lists}>
         <h1 className={styles.home__listsTitle}>TODO LISTS:</h1>

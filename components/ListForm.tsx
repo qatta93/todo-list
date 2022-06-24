@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FormHelperText, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import cuid from 'cuid';
@@ -11,7 +11,7 @@ interface TodoListProps {
   todoListName: string,
 }
 
-export const ListForm = ({ setList, list, todos, setTodos }:any ) => {
+export const ListForm = () => {
 
   const router = useRouter()
   
@@ -32,6 +32,7 @@ export const ListForm = ({ setList, list, todos, setTodos }:any ) => {
       }).then(() => {
           console.log('post is working!')
           setForm({todoListId: '', todoListName: ''})
+          setTimeout(function(){window.location.reload();},0.1);
           refreshData()
       })
       } catch (error) {
