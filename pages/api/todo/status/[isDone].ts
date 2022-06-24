@@ -5,19 +5,9 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
 	const id = req.query.id;
-	const {isDone} = req.query
-
-	if(req.method === 'DELETE') {
-		const todoToDelete = await prisma.todo.delete({
-			where: {
-				//@ts-ignore
-				todoId: id,
-			}
-		})
-		res.json(todoToDelete)
-	} else {
-		console.log("Todo couldn't be deleted");
-	}
+	console.log(id)
+	const {status} = req.query
+  console.log(status)
 
 	if(req.method === 'UPDATE') {
 		const todoUpdate = await prisma.todo.update({
@@ -26,7 +16,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				todoId: id,
 			},
 			data: {
-				isDone: true
+				//@ts-ignore
+				isDone: status,
 			}
 		})
 		res.json(todoUpdate)

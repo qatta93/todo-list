@@ -22,7 +22,22 @@ export const TodoCard = ({ todo }:any) => {
          method: 'DELETE'
        }).then(() => {
          refreshData()
-         console.log('delete')
+       })
+      } catch (error) {
+       console.log(error); 
+      }
+    }
+
+    const handleIsDone = async (id: string) => {
+      try {
+       fetch(`http://localhost:3000/api/todo/${id}`, {
+         headers: {
+           "Content-Type": "application/json",
+         },
+         method: 'UPDATE'
+       }).then(() => {
+         refreshData()
+         console.log('update')
        })
       } catch (error) {
        console.log(error); 
