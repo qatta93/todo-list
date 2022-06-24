@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </main>
 
       <footer className={styles.footer}>
-        <p>created by <a href='https://patrycja.info' target="_blank">Patrycja Panasiuk</a></p>
+        <p>created by <Link href='https://patrycja.info' rel="noreferrer" target="_blank">Patrycja Panasiuk</Link></p>
       </footer>
     </div>
   )

@@ -8,6 +8,7 @@ import { ListForm } from '../components/ListForm'
 import { TrashIcon } from '@heroicons/react/outline'
 import { TodoListProps, TodoProps } from '../types/types';
 import Link from 'next/link'
+import Image from 'next/image'
 
 const prisma = new PrismaClient();
 
@@ -59,7 +60,7 @@ const Home: NextPage =  ({ initialList, initialTodos }:any ) => {
   return (
     <div className={styles.home__container}>
       <section className={styles.home__intro}>
-        <img src="img/bcg.png" alt="todo-list" />
+        <Image src="img/bcg.png" alt="todo-list" />
         <h1>Do you know that having <b>TODO LIST</b> can potentially sabotage your productivity?</h1>
         <Button variant="contained" className= {newList === false ? styles.home__introBtn : styles.home__introBtnClose} onClick={() => setNewList(!newList)}>{newList === false ? 'NEW LIST' : 'CLOSE FORM'}</Button>
         {newList && <ListForm />}

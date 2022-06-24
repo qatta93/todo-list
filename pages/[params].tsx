@@ -6,6 +6,7 @@ import { ArrowLeftIcon } from '@heroicons/react/solid'
 import { TodoCard } from '../components/TodoCard'
 import cuid from 'cuid';
 import { TodoProps } from '../types/types';
+import Link from 'next/link'
 
 const prisma = new PrismaClient();
 
@@ -62,7 +63,7 @@ export const List = ({ initialTodos, initialTodoList }:any ) => {
 
   return (
     <div className={styles.list__container}>
-      <a href="/" className={styles.list__nav}><ArrowLeftIcon className={styles.list__arrow}/>HOME</a>
+      <Link href="/" className={styles.list__nav}><ArrowLeftIcon className={styles.list__arrow}/>HOME</Link>
       <section className={styles.list}>
         <article className={styles.list__items}>
         <h1>{params} todo list :</h1>
